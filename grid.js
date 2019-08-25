@@ -38,3 +38,8 @@ Grid.prototype.buildCleanNodes = function(){
     }
     return this.nodes;
 };
+
+// return truw if the given x and y position is in bounds
+Grid.prototype.isInBounds = function(x,y){
+    return (x >= 0 && x < this.w) && (y >= 0 && y < this.h);
+};
