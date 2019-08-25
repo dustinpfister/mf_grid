@@ -1,3 +1,11 @@
+var Node = function(opt){
+    var opt = opt || {};
+    this.x = opt.x;
+    this.y = opt.y;
+    this.i = opt.i;
+    this.walkable = opt.walkable === undefined ? true: opt.walkable;
+};
+
 var Grid = function(opt){
     
     opt = opt || {};
@@ -17,7 +25,12 @@ Grid.prototype.buildCleanNodes = function(){
         x = 0;
         row = [];
         while(x < this.w){
-            row.push(0);
+            row.push(new Node({
+                x: x,
+                y: y,
+                i: y * this.w + x,
+                walkable: true
+            }));
             x += 1;
         }
         this.nodes.push(row);
