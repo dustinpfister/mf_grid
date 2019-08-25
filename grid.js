@@ -38,7 +38,7 @@ Grid.prototype.buildCleanNodes = function(){
     return this.nodes;
 };
 
-// return truw if the given x and y position is in bounds
+// return true if the given x and y position is in bounds
 Grid.prototype.isInBounds = function(x,y){
     return (x >= 0 && x < this.w) && (y >= 0 && y < this.h);
 };
@@ -48,7 +48,6 @@ Grid.prototype.getNeighbors = function(node){
     var x = node.x,
     y = node.y,
     neighbors = [];
-
     if(this.isInBounds(x,y-1)){
         neighbors.push(this.nodes[y-1][x]);
     }
@@ -61,7 +60,5 @@ Grid.prototype.getNeighbors = function(node){
     if(this.isInBounds(x + 1,y)){
         neighbors.push(this.nodes[y][x+1]);
     }
-    
     return neighbors;    
-    
 };
