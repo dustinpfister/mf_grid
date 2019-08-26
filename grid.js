@@ -27,7 +27,7 @@ Grid.fromMatrix = function(matrix){
         x = 0;
         while(x < grid.w){
             m = matrix[y][x];
-            grid[y][x] = new Node({
+            grid.nodes[y][x] = new Node({
                 x:x,
                 y:y,
                 i:m.i,
@@ -35,7 +35,6 @@ Grid.fromMatrix = function(matrix){
             });
             x += 1;
         }
-        grid.nodes.push(row);
         y += 1;
     }
     return grid;
