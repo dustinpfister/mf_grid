@@ -62,3 +62,13 @@ Grid.prototype.getNeighbors = function(node){
     }
     return neighbors;    
 };
+
+// Find path from start node to end node
+Grid.prototype.findPath = function(startNode, endNode){
+    
+    var opened = [];
+    opened.push(startNode);
+    startNode.opened = true;
+    
+    
+};
