@@ -16,7 +16,7 @@ var Grid = function(opt){
     this.buildCleanNodes();
 };
 
-// FromMatrix static method
+// FromMatrix static method can be used to clone a Grid
 Grid.fromMatrix = function(matrix){
     var grid = new Grid({
         w: matrix[0].length,
@@ -87,18 +87,44 @@ Grid.prototype.getNeighbors = function(node){
     return neighbors;    
 };
 
-// clone the grid
-Grid.prototype.clone = function(){
-    
-    
-};
-
 // Find path from start node to end node
 Grid.prototype.findPath = function(startNode, endNode){
     
-    var opened = [];
+    var grid = Grid.fromMatrix(this.nodes),
+    path = [],
+    opened = [],
+    node;
+    
     opened.push(startNode);
     startNode.opened = true;
     
+    //console.log(opened);
+    while(opened.length > 0){
+        node = opened.pop();
+        node.closed = true;
+        
+        if(node === endNode){
+            return path;
+        }
+        
+        var neighbors = grid.getNeighbors(node);
+        console.log(neighbors);
+        var ni = 0,
+        nl = neighbors.length;
+        
+        // loop current neighbors
+        while(ni < nl){
+            var neighbor = neighbors[ni];
+            if (neighbor.closed) {
+                ni += 1;
+                continue;
+            }
+            
+            ni += 1;
+        }
+        
+    }
+    
+    return [];
     
 };
