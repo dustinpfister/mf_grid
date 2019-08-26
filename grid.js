@@ -79,16 +79,16 @@ Grid.prototype.getNeighbors = function(node){
     var x = node.x,
     y = node.y,
     neighbors = [];
-    if(this.isInBounds(x,y-1)){
+    if(this.isWalkable(x,y-1)){
         neighbors.push(this.nodes[y-1][x]);
     }
-    if(this.isInBounds(x,y + 1)){
+    if(this.isWalkable(x,y + 1)){
         neighbors.push(this.nodes[y+1][x]);
     }
-    if(this.isInBounds(x - 1,y)){
+    if(this.isWalkable(x - 1,y)){
         neighbors.push(this.nodes[y][x-1]);
     }
-    if(this.isInBounds(x + 1,y)){
+    if(this.isWalkable(x + 1,y)){
         neighbors.push(this.nodes[y][x+1]);
     }
     return neighbors;    
