@@ -16,6 +16,31 @@ var Grid = function(opt){
     this.buildCleanNodes();
 };
 
+// FromMatrix static method
+Grid.fromMatrix = function(matrix){
+    var grid = new Grid({
+        w: matrix[0].length,
+        h: matrix.length
+    });
+    var y=0,x,m;
+    while(y < grid.h){
+        x = 0;
+        while(x < grid.w){
+            m = matrix[y][x];
+            grid[y][x] = new Node({
+                x:x,
+                y:y,
+                i:m.i,
+                walkable: m.walkable
+            });
+            x += 1;
+        }
+        grid.nodes.push(row);
+        y += 1;
+    }
+    return grid;
+};
+
 // just build a clean array of nodes for the gird
 Grid.prototype.buildCleanNodes = function(){
     this.nodes = [];
@@ -61,6 +86,12 @@ Grid.prototype.getNeighbors = function(node){
         neighbors.push(this.nodes[y][x+1]);
     }
     return neighbors;    
+};
+
+// clone the grid
+Grid.prototype.clone = function(){
+    
+    
 };
 
 // Find path from start node to end node
