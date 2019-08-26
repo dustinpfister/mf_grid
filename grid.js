@@ -127,6 +127,12 @@ Grid.prototype.findPath = function(startNode, endNode){
                 continue;
             }
             
+            if (!neighbor.opened){
+                
+                opened.push(neighbor);
+                neighbor.opened = true;
+            }
+            
             ni += 1;
         }
         
