@@ -67,6 +67,13 @@ Grid.prototype.isInBounds = function(x,y){
     return (x >= 0 && x < this.w) && (y >= 0 && y < this.h);
 };
 
+Grid.prototype.isWalkable = function(x,y){
+    if(this.isInBounds(x,y)){
+        return this.nodes[y][x].walkable;
+    }
+    return false;
+};
+
 // get the four Neighbors of a node
 Grid.prototype.getNeighbors = function(node){
     var x = node.x,
