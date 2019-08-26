@@ -102,6 +102,9 @@ Grid.prototype.findPath = function(startNode, endNode){
     opened = [],
     node;
     
+    startNode = grid.nodes[startNode.y][startNode.x];
+    endNode = grid.nodes[endNode.y][endNode.x];
+    
     opened.push(startNode);
     startNode.opened = true;
     
@@ -111,11 +114,16 @@ Grid.prototype.findPath = function(startNode, endNode){
         node.closed = true;
         
         if(node === endNode){
+            while (node.parent) {
+                path.push([node.x,node.y]);
+                console.log(node);
+                node = node.parent;
+            }
             return path;
         }
         
         var neighbors = grid.getNeighbors(node);
-        console.log(neighbors);
+        //console.log(neighbors);
         var ni = 0,
         nl = neighbors.length;
         
@@ -128,6 +136,8 @@ Grid.prototype.findPath = function(startNode, endNode){
             }
             
             if (!neighbor.opened){
+                
+                neighbor.parent = node;
                 
                 opened.push(neighbor);
                 neighbor.opened = true;
