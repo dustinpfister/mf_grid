@@ -5,6 +5,7 @@ var Node = function(opt){
     this.y = opt.y;
     this.i = opt.i;
     this.walkable = opt.walkable === undefined ? true: opt.walkable;
+    this.ti = opt.ti || 0; // tile index used to skin the tile
 };
 
 // Main Grid Constructor
@@ -96,37 +97,41 @@ Grid.prototype.getNeighbors = function(node){
 
 // Find path from start node to end node
 Grid.prototype.findPath = function(startNode, endNode){
-    
     var grid = Grid.fromMatrix(this.nodes),
     path = [],
-    opened = [],
+    open = [],
     node;
-    
     startNode = grid.nodes[startNode.y][startNode.x];
     endNode = grid.nodes[endNode.y][endNode.x];
-    
-    opened.push(startNode);
+    var sortOpen = function(open){
+        return open.sort(function(nodeA, nodeB){
+            //console.log(nodeA.weight, nodeB.weight);
+            if(nodeA.weight < nodeB.weight){
+                return 1;
+            }
+            if(nodeA.weight > nodeB.weight){
+                return -1;
+            }
+            return 0;
+        });
+    };
+    open.push(startNode);
     startNode.opened = true;
-    
-    //console.log(opened);
-    while(opened.length > 0){
-        node = opened.pop();
+    startNode.weight = 0;
+    while(open.length > 0){
+        node = open.pop();
         node.closed = true;
-        
         if(node === endNode){
             while (node.parent) {
                 path.push([node.x,node.y]);
-                console.log(node);
                 node = node.parent;
             }
+            path.push([node.x,node.y]);
             return path;
         }
-        
         var neighbors = grid.getNeighbors(node);
-        //console.log(neighbors);
         var ni = 0,
         nl = neighbors.length;
-        
         // loop current neighbors
         while(ni < nl){
             var neighbor = neighbors[ni];
@@ -134,20 +139,15 @@ Grid.prototype.findPath = function(startNode, endNode){
                 ni += 1;
                 continue;
             }
-            
+            neighbor.weight = Math.sqrt(Math.pow(endNode.x - neighbor.x, 2) + Math.pow(endNode.y - neighbor.y, 2));
             if (!neighbor.opened){
-                
                 neighbor.parent = node;
-                
-                opened.push(neighbor);
+                open.push(neighbor);
                 neighbor.opened = true;
             }
-            
             ni += 1;
         }
-        
+        sortOpen(open);
     }
-    
     return [];
-    
 };
